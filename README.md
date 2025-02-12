@@ -4,3 +4,7 @@ This extension integrates with your qBittorrent client via the WebUI API, allowi
 
 ## IMPORTANT:
 You **must** disable Cross-Site Request Forgery (CSRF) protection in qBittorrent for the API calls to work properly. You can either disable it manually in your qBittorrent settings or use the **"Disable CSRF"** button in the extension's UI after entering your API credentials.
+
+## [Click to install](https://addons.mozilla.org/firefox/downloads/file/4435537/send_to_qbittorrent-1.0.xpi)
+
+## [Download from addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/send-to-qbittorrent/)
