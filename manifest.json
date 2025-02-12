@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "Send to qBittorrent",
+  "version": "1.0",
+  "description": "Send torrent/magnet links to qBittorrent from the right-click context menu",
+  "author": "https://github.com/frogmech",
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_popup": "config.html"
+  }
+}

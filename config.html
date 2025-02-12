@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Config</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 300px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    select {
+      border-radius: 4px;
+    }
+    .dark-mode-body {
+      background-color: black;
+      color: white;
+    }
+    .dark-mode-others {
+      background-color: #3C3C4399;
+      color: white;
+    }
+    .text {
+      position: absolute;
+      top: 3%;
+      left: 150px;
+    }
+    .form {
+      position: relative;
+      left: -8px;
+    }
+    .light-mode-button {
+      background: url('icons/lightmode.png') no-repeat center center;
+      border: none;
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      bottom: -10px;
+      right: -19px;
+    }
+    .dark-mode-button {
+      background: url('icons/darkmode.png') no-repeat center center;
+      border: none;
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      bottom: -10px;
+      right: -19px;
+    }
+    .github-light {
+      background: url('icons/githublight.png') no-repeat center center;
+      border: none;
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      bottom: -10px;
+      right: 40px;
+    }
+    .github-dark {
+      background: url('icons/githubdark.png') no-repeat center center;
+      border: none;
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      bottom: -10px;
+      right: 40px;
+    }
+    .csrf-button {
+      position: absolute;
+      top: -10px;
+      right: -19px;
+    }
+    .open-qbit-button {
+      position: absolute;
+      top: -10px;
+      right: 90px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <image src="icons/icon-96.png"></image>
+    <div class="text">
+    <h2>qBittorrent API <br></br>Configuration</h2>
+    </div>
+  </div>
+  <br></br>
+  <div class="form">
+    <form id="config-form">
+      <select id="apiScheme" required>
+        <option value="http">HTTP</option>
+        <option value="https">HTTPS</option>
+      </select>
+      <br></br>
+      <label for="apiHost">Host</label>
+      <input type="text" id="apiHost" placeholder="Enter qBittorrent Address" required>
+
+      <label for="apiPort">Port</label>
+      <input type="text" id="apiPort" placeholder="Enter qBittorrent Port" required>
+
+      <label for="apiUsername">Username</label>
+      <input type="text" id="apiUsername" placeholder="Enter qBittorrent Username" required>
+
+      <label for="apiPassword">Password</label>
+      <input type="password" id="apiPassword" placeholder="Enter qBittorrent Password" required>
+
+      <button id="submit" type="submit">Save Credentials</button>
+      <span id="success-checkmark" style="display: none; color: green; font-size: 20px;">✔️</span>
+      <span id="failure-x" style="display: none; color: red; font-size: 20px;">❌</span>
+
+    </form>
+    <button id="lightdarkmode" class="light-mode-button"></button>
+    <a id="github" class="github-light" href="https://github.com/frogmech/send-to-qbittorrent" target="_blank"></a>
+    <button id="disableCSRF" class="csrf-button">Disable CSRF</button>
+    <button id="openQbit" class="open-qbit-button">Open WebUI</button>
+  </div>
+  <script src="config.js"></script>
+</body>
+</html>
