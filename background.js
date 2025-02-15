@@ -44,14 +44,22 @@ async function regularLogin(tabId) {
     });
 }
 
-browser.runtime.onInstalled.addListener(async () => {
+async function createContextMenu() {
   await browser.contextMenus.removeAll()
   browser.contextMenus.create(
   {
     id: "sendToQbit",
     title: "Send to qBittorrent",
-  }
-  );
+    contexts: ["link"],
+  });
+}
+
+browser.runtime.onStartup.addListener(() => {
+  createContextMenu();
+});
+
+browser.runtime.onInstalled.addListener(() => {
+  createContextMenu();
 });
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
