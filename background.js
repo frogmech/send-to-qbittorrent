@@ -73,7 +73,6 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 let loginTabs = new Set();
 browser.runtime.onMessage.addListener(async (message) => {
   if (message.action === 'disableCSRF') {
-    const { url, username, password, credentials } = await getCredentials();
     const tabId = await openQbit();
     await regularLogin();
     loginTabs.add(tabId);
