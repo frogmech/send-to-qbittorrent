@@ -4,10 +4,9 @@ const apiHostInput = document.getElementById('apiHost');
 const apiPortInput = document.getElementById('apiPort');
 const apiUsernameInput = document.getElementById('apiUsername');
 const apiPasswordInput = document.getElementById('apiPassword');
-const leftClickSendInput = document.getElementById('leftClickSend')
 
 // Load saved credentials if they exist
-browser.storage.local.get(['apiScheme', 'apiHost', 'apiPort', 'apiUsername', 'apiPassword', 'leftClickSend']).then(data => {
+browser.storage.local.get(['apiScheme', 'apiHost', 'apiPort', 'apiUsername', 'apiPassword']).then(data => {
   if (data.apiScheme) {
     apiSchemeInput.value = data.apiScheme;
   }
@@ -23,9 +22,6 @@ browser.storage.local.get(['apiScheme', 'apiHost', 'apiPort', 'apiUsername', 'ap
   if (data.apiPassword) {
     apiPasswordInput.value = data.apiPassword;
   }
-  if (data.leftClickSend) {
-    leftClickSendInput.checked = data.leftClickSend;
-  }
 });
 
 // Handle form submission
@@ -38,7 +34,6 @@ saveButton.addEventListener('click', (event) => {
   const apiPort = apiPortInput.value;
   const apiUsername = apiUsernameInput.value;
   const apiPassword = apiPasswordInput.value;
-  const leftClickSend = leftClickSendInput.checked;
 
   // Save credentials to storage
   browser.storage.local.set({
@@ -47,7 +42,6 @@ saveButton.addEventListener('click', (event) => {
     apiPort: apiPort,
     apiUsername: apiUsername,
     apiPassword: apiPassword,
-    leftClickSend: leftClickSend
   }).then(() => {
       const checkmark = document.getElementById('success-checkmark');
       checkmark.style.display = 'inline';
@@ -73,10 +67,10 @@ async function getDarkMode() {
 
 function enableDarkMode() { 
   document.body.classList.add("dark-mode-body");
-  document.getElementById('lightdarkmode').classList.remove("light-mode-button");
-  document.getElementById('lightdarkmode').classList.add("dark-mode-button");
   document.getElementById('github').classList.remove("github-light");
   document.getElementById('github').classList.add("github-dark");
+  document.getElementById('settings').classList.remove("settings-button-light");
+  document.getElementById('settings').classList.add("settings-button-dark");
   const inputs = document.querySelectorAll('input');
   inputs.forEach(input => input.classList.add("dark-mode-others"));
   const buttons = document.querySelectorAll('button');
@@ -89,10 +83,10 @@ function enableDarkMode() {
 
 function disableDarkMode() {
   document.body.classList.remove("dark-mode-body");
-  document.getElementById('lightdarkmode').classList.remove("dark-mode-button");
-  document.getElementById('lightdarkmode').classList.add("light-mode-button");
   document.getElementById('github').classList.remove("github-dark");
   document.getElementById('github').classList.add("github-light");
+  document.getElementById('settings').classList.remove("settings-button-dark");
+  document.getElementById('settings').classList.add("settings-button-light");
   const inputs = document.querySelectorAll('input');
   inputs.forEach(input => input.classList.remove("dark-mode-others"));
   const buttons = document.querySelectorAll('button');
@@ -113,18 +107,9 @@ async function initializeDarkMode() {
 }
 
 initializeDarkMode()
-const darkModeButton = document.getElementById('lightdarkmode');
-darkModeButton.addEventListener('click', async (event) => {
-  let darkMode = await getDarkMode();
-  darkMode = !darkMode;
-  browser.storage.local.set({ darkMode: darkMode });
-  if (darkMode) {
-    enableDarkMode();
-  } else {
-    disableDarkMode();
-  }
-});
 
-//Handle clicks on disable CSRF and open WebUI buttons
-document.getElementById('disableCSRF').addEventListener('click', async () => {browser.runtime.sendMessage({ action: "disableCSRF" });});
+//Handle clicks on settings and open WebUI buttons
 document.getElementById('openQbit').addEventListener('click', async () => {browser.runtime.sendMessage({ action: "openQbit" });});
+document.getElementById('settings').addEventListener('click', () => {
+  window.location.href = 'settings.html';
+});

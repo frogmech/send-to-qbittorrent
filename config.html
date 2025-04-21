@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      max-width: 300px;
+      width: 300px;
     }
     label {
       display: block;
@@ -47,24 +47,6 @@
       position: relative;
       left: -8px;
     }
-    .light-mode-button {
-      background: url('icons/lightmode.png') no-repeat center center;
-      border: none;
-      width: 48px;
-      height: 48px;
-      position: absolute;
-      bottom: -10px;
-      right: -19px;
-    }
-    .dark-mode-button {
-      background: url('icons/darkmode.png') no-repeat center center;
-      border: none;
-      width: 48px;
-      height: 48px;
-      position: absolute;
-      bottom: -10px;
-      right: -19px;
-    }
     .github-light {
       background: url('icons/githublight.png') no-repeat center center;
       border: none;
@@ -83,28 +65,28 @@
       bottom: -10px;
       right: 40px;
     }
-    .csrf-button {
+    .open-qbit-button {
       position: absolute;
       top: -10px;
       right: -19px;
     }
-    .open-qbit-button {
+    .settings-button-light {
+      background: url('icons/settingslight.png') no-repeat center center;
+      border: none;
       position: absolute;
-      top: -10px;
-      right: 90px;
+      bottom: -10px;
+      right: -19px;
+      width: 48px;
+      height: 48px;
     }
-    .left-click-checkbox {
+    .settings-button-dark {
+      background: url('icons/settingsdark.png') no-repeat center center;
+      border: none;
       position: absolute;
-      bottom: -25px;
-      right: 100px;
-      font-size: 9px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .left-click-checkbox input {
-      margin: 3px;
+      bottom: -10px;
+      right: -19px;
+      width: 48px;
+      height: 48px;
     }
   </style>
 </head>
@@ -135,22 +117,13 @@
       <label for="apiPassword">Password</label>
       <input type="password" id="apiPassword" placeholder="Enter qBittorrent Password" required>
 
-      <label class="left-click-checkbox">
-        <input type="checkbox" id="leftClickSend">
-        <span class="left-click-checkbox-text">
-          Left click<br>
-          to send torrent
-        </span>
-      </label>
-
       <button id="submit" type="submit">Save Credentials</button>
       <span id="success-checkmark" style="display: none; color: green; font-size: 20px;">✔️</span>
       <span id="failure-x" style="display: none; color: red; font-size: 20px;">❌</span>
 
     </form>
-    <button id="lightdarkmode" class="light-mode-button"></button>
+    <button id="settings" class="settings-button-light"></button>
     <a id="github" class="github-light" href="https://github.com/frogmech/send-to-qbittorrent" target="_blank"></a>
-    <button id="disableCSRF" class="csrf-button">Disable CSRF</button>
     <button id="openQbit" class="open-qbit-button">Open WebUI</button>
   </div>
   <script src="config.js"></script>
