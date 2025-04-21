@@ -4,9 +4,10 @@ const apiHostInput = document.getElementById('apiHost');
 const apiPortInput = document.getElementById('apiPort');
 const apiUsernameInput = document.getElementById('apiUsername');
 const apiPasswordInput = document.getElementById('apiPassword');
+const leftClickSendInput = document.getElementById('leftClickSend')
 
 // Load saved credentials if they exist
-browser.storage.local.get(['apiScheme', 'apiHost', 'apiPort', 'apiUsername', 'apiPassword']).then(data => {
+browser.storage.local.get(['apiScheme', 'apiHost', 'apiPort', 'apiUsername', 'apiPassword', 'leftClickSend']).then(data => {
   if (data.apiScheme) {
     apiSchemeInput.value = data.apiScheme;
   }
@@ -22,6 +23,9 @@ browser.storage.local.get(['apiScheme', 'apiHost', 'apiPort', 'apiUsername', 'ap
   if (data.apiPassword) {
     apiPasswordInput.value = data.apiPassword;
   }
+  if (data.leftClickSend) {
+    leftClickSendInput.checked = data.leftClickSend;
+  }
 });
 
 // Handle form submission
@@ -34,6 +38,7 @@ saveButton.addEventListener('click', (event) => {
   const apiPort = apiPortInput.value;
   const apiUsername = apiUsernameInput.value;
   const apiPassword = apiPasswordInput.value;
+  const leftClickSend = leftClickSendInput.checked;
 
   // Save credentials to storage
   browser.storage.local.set({
@@ -41,8 +46,9 @@ saveButton.addEventListener('click', (event) => {
     apiHost: apiHost,
     apiPort: apiPort,
     apiUsername: apiUsername,
-    apiPassword: apiPassword
-  }).then(() => {     // Click each button in sequence
+    apiPassword: apiPassword,
+    leftClickSend: leftClickSend
+  }).then(() => {
       const checkmark = document.getElementById('success-checkmark');
       checkmark.style.display = 'inline';
       setTimeout(() => {
