@@ -70,6 +70,14 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
+browser.storage.onChanged.addListener(async (changes, areaName) => {
+  if (areaName === "local" && changes.magnetLink) {
+    const credentials = await getCredentials();
+    await login();
+    addTorrent(changes.magnetLink.newValue, credentials)
+  }
+});
+
 let loginTabs = new Set();
 browser.runtime.onMessage.addListener(async (message) => {
   if (message.action === 'disableCSRF') {
