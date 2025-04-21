@@ -9,6 +9,6 @@ Click on the extension's icon to open the config menu and enter your API credent
 ### IMPORTANT:
 You **must** disable Cross-Site Request Forgery (CSRF) protection in qBittorrent for the API calls to work properly. You can either disable it manually in your qBittorrent settings or use the **"Disable CSRF"** button in the extension's UI after entering your API credentials.
 
-# [Click to install](https://addons.mozilla.org/firefox/downloads/file/4437766/send_to_qbittorrent-1.0.1.xpi)
+# [Click to install](https://addons.mozilla.org/firefox/downloads/file/4478143/send_to_qbittorrent-1.1.0.xpi)
 
 # [Download from addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/send-to-qbittorrent/)
