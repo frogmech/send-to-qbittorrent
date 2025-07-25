@@ -23,6 +23,14 @@ async function addTorrent(urls, credentials) {
         method: "POST",
         body: new URLSearchParams({urls}),
     });
+    if (response.status === 200) {
+      browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+        if (tabs.length === 0) return;
+        browser.tabs.sendMessage(tabs[0].id, {
+          action: "torrentAdded"
+        });
+      });
+    }
 }
 
 async function openQbit() {
