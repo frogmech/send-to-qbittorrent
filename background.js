@@ -17,11 +17,11 @@ async function login() {
     return response.text();
 }
 
-async function addTorrent(urls, credentials) {
+async function addTorrent(urls, credentials, category) {
     const { url } = credentials;
     const response = await fetch(`${url}/api/v2/torrents/add`, {
         method: "POST",
-        body: new URLSearchParams({urls}),
+        body: new URLSearchParams(category ? {urls, category, autoTMM: "true"} : {urls}),
     });
     if (response.status === 200) {
       browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
@@ -52,15 +52,41 @@ async function regularLogin(tabId) {
     });
 }
 
-async function createContextMenu() {
+let menuCategories = null;
+
+async function createContextMenu(categories = []) {
   await browser.contextMenus.removeAll()
-  browser.contextMenus.create(
-  {
+  menuCategories = categories.join('\n');
+  browser.contextMenus.create({
     id: "sendToQbit",
     title: "Send to qBittorrent",
     contexts: ["link"],
   });
+  if (!categories.length) return;
+  browser.contextMenus.create({ id: "sendToQbitNone", parentId: "sendToQbit", title: "(no category)", contexts: ["link"] });
+  for (const name of categories) {
+    browser.contextMenus.create({ id: `cat:${name}`, parentId: "sendToQbit", title: name.replace(/&/g, "&&"), contexts: ["link"] });
+  }
 }
+
+async function fetchCategories() {
+  try {
+    const { url } = await getCredentials();
+    await login();
+    const response = await fetch(`${url}/api/v2/torrents/categories`);
+    return Object.keys(await response.json()).sort((a, b) => a.localeCompare(b));
+  } catch (e) {
+    return [];
+  }
+}
+
+// Categories live in qBittorrent, so refresh the submenu each time the menu opens.
+browser.contextMenus.onShown.addListener(async (info, tab) => {
+  if (!info.contexts.includes("link")) return;
+  const categories = await fetchCategories();
+  if (categories.join('\n') !== menuCategories) await createContextMenu(categories);
+  browser.contextMenus.refresh();
+});
 
 browser.runtime.onStartup.addListener(() => {
   createContextMenu();
@@ -71,10 +97,11 @@ browser.runtime.onInstalled.addListener(() => {
 });
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (info.menuItemId === "sendToQbit") {
+  const id = String(info.menuItemId);
+  if (id === "sendToQbit" || id === "sendToQbitNone" || id.startsWith("cat:")) {
     const credentials = await getCredentials();
     await login();
-    addTorrent(info.linkUrl, credentials)
+    addTorrent(info.linkUrl, credentials, id.startsWith("cat:") ? id.slice(4) : undefined)
   }
 });
 
